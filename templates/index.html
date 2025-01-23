@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MNIST Digit Classifier</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>🖼️ MNIST Digit Classifier</h1>
+        <p>Upload an image of a handwritten digit (28x28), and the model will predict it!</p>
+        
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*" required>
+            <button type="submit">Predict</button>
+        </form>
+        
+        {% if prediction is not none %}
+            <h2>Predicted Digit: {{ prediction }}</h2>
+            <h3>Confidence Scores:</h3>
+            <ul>
+                {% for i in range(10) %}
+                    <li>Digit {{ i }}: {{ "%.2f" % (probabilities[i].item() * 100) }}%</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</body>
+</html>
